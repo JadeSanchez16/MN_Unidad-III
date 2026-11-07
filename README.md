@@ -1,6 +1,8 @@
 # Sistema de Métodos Numéricos
 
-Aplicación web local para la Unidad III. La Sesión 12 incluye el ejercicio original de tráfico de red, la regla del trapecio compuesto, su procedimiento, gráficas y un solucionador para otras funciones.
+**Abrir la aplicación:** https://jadesanchez16.github.io/MN_Unidad-III/
+
+Aplicación web para la Unidad III. La Sesión 12 incluye el ejercicio original de tráfico de red, la regla del trapecio compuesto, su procedimiento, gráficas y un solucionador para otras funciones.
 
 ## Ejecutar
 
