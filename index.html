@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12273c">
+  <meta name="description" content="Sistema académico de integración numérica con regla del trapecio compuesto y solucionador general.">
+  <title>Sistema de Métodos Numéricos · Sesión 12</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="brand-mark" aria-hidden="true">∫</div>
+    <div class="brand-copy"><span class="eyebrow">Laboratorio académico · Unidad III</span><h1>Sistema de Métodos Numéricos</h1></div>
+    <nav aria-label="Sesiones"><a class="nav-link active" href="#sesion12">Sesión 12 <span>Integración numérica</span></a></nav>
+  </header>
+
+  <main id="contenido">
+    <section class="hero" id="sesion12" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Unidad 3 <span class="dash">/</span> Sesión 12</p>
+        <h2 id="hero-title">Integración numérica</h2>
+        <p>Estima integrales con la regla del trapecio compuesto, examina cada operación y observa la convergencia al aumentar los subintervalos.</p>
+        <div class="hero-links"><a class="button button-light" href="#ejercicio">Ver ejercicio de la tarea</a><a class="button button-outline" href="#solucionador">Abrir solucionador</a></div>
+      </div>
+      <div class="hero-formula" aria-label="Fórmula de la regla del trapecio compuesto">
+        <span class="formula-kicker">Regla de trabajo</span>
+        <math display="block"><msub><mi>T</mi><mi>n</mi></msub><mo>=</mo><mfrac><mi>h</mi><mn>2</mn></mfrac><mo>[</mo><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo><mo>+</mo><mn>2</mn><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></munderover><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>+</mo><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>n</mi></msub><mo>)</mo><mo>]</mo></math>
+        <span class="formula-foot">h = (b − a) / n · nodos equidistantes</span>
+      </div>
+    </section>
+
+    <div class="section-tabs" role="navigation" aria-label="Apartados de la sesión"><a href="#ejercicio">01 · Ejercicio de la tarea</a><a href="#solucionador">02 · Solucionador</a></div>
+
+    <section class="workspace-section" id="ejercicio" aria-labelledby="exercise-title">
+      <div class="section-heading"><div><span class="section-index">01 / CASO ACADÉMICO</span><h2 id="exercise-title">Ejercicio de la tarea</h2><p>Estimación del tráfico de red en un servidor web durante 12 segundos.</p></div><span class="pill">Ejercicio original protegido</span></div>
+      <div class="problem-card">
+        <div><span class="small-label">Tasa de transferencia</span><p class="equation">R(t) = 10 + 5 sen(πt/4) + e<sup>0,15t</sup></p><p>R(t) se mide en megabits por segundo (Mbps); t, en segundos.</p></div>
+        <div><span class="small-label">Objetivo</span><p class="equation">D = ∫<sub>0</sub><sup>12</sup> R(t) dt</p><p>Datos transferidos, en megabits (Mb).</p></div>
+        <div class="problem-params"><div><span>a</span><strong>0 s</strong></div><div><span>b</span><strong>12 s</strong></div><div><span>n</span><strong>4</strong></div><div><span>Método</span><strong>Trapecio compuesto</strong></div></div>
+      </div>
+      <div id="original-output" class="output-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="workspace-section solver-section" id="solucionador" aria-labelledby="solver-title">
+      <div class="section-heading"><div><span class="section-index">02 / EXPLORACIÓN LIBRE</span><h2 id="solver-title">Solucionador</h2><p>Resuelve otros ejercicios sin alterar el caso original.</p></div><span class="pill pill-accent">Funciones en radianes</span></div>
+      <div class="solver-layout">
+        <form id="solver-form" class="form-panel" novalidate>
+          <div class="panel-title"><h3>Datos de entrada</h3><p>Usa x o t como variable y * para multiplicar.</p></div>
+          <label for="expression">Función f(x) o f(t)</label><input id="expression" name="expression" type="text" spellcheck="false" autocomplete="off" value="10+5*sin(pi*t/4)+exp(0.15*t)" required><p class="field-help">Funciones: sin, cos, tan, exp, sqrt, ln, log, abs. Constantes: pi, e. Potencias: ^.</p>
+          <div class="field-row"><div><label for="lower">Límite inferior a</label><input id="lower" name="lower" type="text" inputmode="decimal" value="0" required></div><div><label for="upper">Límite superior b</label><input id="upper" name="upper" type="text" inputmode="decimal" value="12" required></div></div>
+          <div class="field-row"><div><label for="intervals">Subintervalos n</label><input id="intervals" name="intervals" type="number" min="1" max="100000" step="1" value="4" required></div><div><label for="decimals">Decimales visibles</label><input id="decimals" name="decimals" type="number" min="0" max="12" step="1" value="6" required></div></div>
+          <label for="exact">Valor exacto o de referencia <span class="optional">(opcional)</span></label><input id="exact" name="exact" type="text" inputmode="decimal" value="166.39671187677126"><p class="field-help">Sin referencia se omiten los errores; si vale cero, el error porcentual no está definido.</p>
+          <label for="n-values">Valores de n para convergencia <span class="optional">(opcional)</span></label><input id="n-values" name="n-values" type="text" value="4, 10, 50, 100, 1000"><p class="field-help">Enteros positivos separados por comas; máximo 20 valores.</p>
+          <div class="button-row"><button class="button button-primary" type="submit">Calcular integral</button><button class="button button-secondary" type="button" id="restore-button">Restaurar ejercicio original</button><button class="button button-quiet" type="button" id="clear-button">Limpiar entradas</button></div>
+          <p id="form-error" class="form-error" role="alert" hidden></p>
+        </form>
+        <aside class="guide-panel"><span class="small-label">Guía rápida</span><h3>Escribe, calcula, interpreta.</h3><p>El analizador acepta operaciones aritméticas, paréntesis y funciones comunes. No ejecuta código JavaScript.</p><div class="example-list"><code>x^2 + 3*x + 1</code><code>sin(x) + exp(x)</code><code>1/(1+x^2)</code><code>sqrt(1+x^2)</code><code>ln(x)</code></div><p>Para dominios como ln(x), elige un intervalo donde cada nodo esté definido. Los gráficos son una ayuda visual; el cálculo utiliza los valores numéricos completos.</p></aside>
+      </div>
+      <div id="solver-output" class="output-grid" aria-live="polite"><div class="empty-state"><span>∫</span><h3>Listo para calcular</h3><p>Ingresa o ajusta los datos y pulsa «Calcular integral».</p></div></div>
+    </section>
+  </main>
+  <footer><span>Sistema de Métodos Numéricos · Unidad III</span><span>Sesión 12 · Regla del trapecio compuesto</span></footer>
+</body>
+</html>
