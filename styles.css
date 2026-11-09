@@ -89,6 +89,18 @@ math {
   color:#b6c9d3;
   font-size:.76rem
 }
+.session-nav {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px
+}
+.session-nav .nav-link:not(.active) {
+  background:transparent;
+  border:1px solid #577081
+}
+.session-nav .nav-link:hover {
+  background:#31566a
+}
 main {
   max-width:1480px;
   margin:auto;
@@ -121,6 +133,11 @@ main {
 }
 .hero>* {
   position:relative
+}
+.session13-hero {
+  margin-top:75px;
+  background:#17394a;
+  scroll-margin-top:18px
 }
 .hero h2 {
   font:800 clamp(2.3rem,4vw,4.3rem)/1.04 Manrope,Arial,sans-serif;
@@ -628,10 +645,16 @@ footer {
 }
 @media(max-width:700px) {
   .site-header {
-    align-items:flex-start
+    align-items:flex-start;
+    flex-wrap:wrap
   }
-  .nav-link {
-    display:none
+  .session-nav {
+    width:100%
+  }
+  .session-nav .nav-link {
+    display:flex;
+    flex:1;
+    min-width:135px
   }
   .hero {
     padding:32px 24px;

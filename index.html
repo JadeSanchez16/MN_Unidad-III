@@ -4,17 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#12273c">
-  <meta name="description" content="Sistema académico de integración numérica con regla del trapecio compuesto y solucionador general.">
-  <title>Sistema de Métodos Numéricos · Sesión 12</title>
+  <meta name="description" content="Sistema académico de integración numérica: trapecio compuesto y Simpson 1/3 compuesto.">
+  <title>Sistema de Métodos Numéricos · Unidad 3</title>
   <link rel="stylesheet" href="./styles.css">
   <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/session13-app.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <header class="site-header">
     <div class="brand-mark" aria-hidden="true">∫</div>
     <div class="brand-copy"><span class="eyebrow">Laboratorio académico · Unidad III</span><h1>Sistema de Métodos Numéricos</h1></div>
-    <nav aria-label="Sesiones"><a class="nav-link active" href="#sesion12">Sesión 12 <span>Integración numérica</span></a></nav>
+    <nav class="session-nav" aria-label="Sesiones"><a class="nav-link active" href="#sesion12">Sesión 12 <span>Trapecio compuesto</span></a><a class="nav-link" href="#sesion13">Sesión 13 <span>Simpson 1/3 compuesto</span></a></nav>
   </header>
 
   <main id="contenido">
@@ -61,7 +62,47 @@
       </div>
       <div id="solver-output" class="output-grid" aria-live="polite"><div class="empty-state"><span>∫</span><h3>Listo para calcular</h3><p>Ingresa o ajusta los datos y pulsa «Calcular integral».</p></div></div>
     </section>
+    <section class="hero session13-hero" id="sesion13" aria-labelledby="session13-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Unidad 3 <span class="dash">/</span> Sesión 13</p>
+        <h2 id="session13-title">Simpson 1/3 compuesto</h2>
+        <p>Aproxima integrales con parábolas en parejas de subintervalos, examina las contribuciones y distingue el error real de una cota justificada.</p>
+        <div class="hero-links"><a class="button button-light" href="#s13-ejercicio">Ver ejercicio original</a><a class="button button-outline" href="#s13-solucionador">Abrir solucionador</a></div>
+      </div>
+      <div class="hero-formula" aria-label="Fórmula de Simpson 1/3 compuesto">
+        <span class="formula-kicker">Regla de trabajo</span>
+        <math display="block"><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><mfrac><mi>h</mi><mn>3</mn></mfrac><mo>[</mo><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo><mo>+</mo><mn>4</mn><munder><mo>∑</mo><mrow><mi>i</mi><mtext> impar</mtext></mrow></munder><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>+</mo><mn>2</mn><munder><mo>∑</mo><mrow><mi>i</mi><mtext> par interior</mtext></mrow></munder><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>+</mo><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>n</mi></msub><mo>)</mo><mo>]</mo></math>
+        <span class="formula-foot">h = (b − a) / n · n par · interpolación cuadrática</span>
+      </div>
+    </section>
+    <div class="section-tabs" role="navigation" aria-label="Apartados de la Sesión 13"><a href="#s13-ejercicio">01 · Ejercicio original</a><a href="#s13-solucionador">02 · Solucionador Simpson</a></div>
+    <section class="workspace-section" id="s13-ejercicio" aria-labelledby="s13-exercise-title">
+      <div class="section-heading"><div><span class="section-index">01 / CASO ACADÉMICO · SESIÓN 13</span><h2 id="s13-exercise-title">Consumo energético de un centro de datos</h2><p>Potencia durante seis horas de carga crítica de microservicios.</p></div><span class="pill">Ejercicio original protegido</span></div>
+      <div class="problem-card">
+        <div><span class="small-label">Potencia instantánea</span><p class="equation">P(t) = 10 + 5t·sen(πt/6) + e<sup>0,2t</sup></p><p>P(t) en kilovatios (kW); t en horas.</p></div>
+        <div><span class="small-label">Objetivo</span><p class="equation">E = ∫<sub>0</sub><sup>6</sup> P(t) dt</p><p>Energía total consumida, en kilovatios hora (kWh).</p></div>
+        <div class="problem-params"><div><span>a</span><strong>0 h</strong></div><div><span>b</span><strong>6 h</strong></div><div><span>n</span><strong>6, par</strong></div><div><span>Método</span><strong>Simpson 1/3 compuesto</strong></div></div>
+      </div>
+      <div id="s13-original-output" class="output-grid" aria-live="polite"></div>
+    </section>
+    <section class="workspace-section solver-section" id="s13-solucionador" aria-labelledby="s13-solver-title">
+      <div class="section-heading"><div><span class="section-index">02 / EXPLORACIÓN LIBRE · SESIÓN 13</span><h2 id="s13-solver-title">Solucionador Simpson</h2><p>Resuelve problemas nuevos sin modificar el ejercicio de la tarea.</p></div><span class="pill pill-accent">Ángulos en radianes</span></div>
+      <div class="solver-layout">
+        <form id="s13-form" class="form-panel" novalidate>
+          <div class="panel-title"><h3>Datos de entrada</h3><p>Usa x o t como variable y * para multiplicar.</p></div>
+          <label for="s13-expression">Función f(x) o f(t)</label><input id="s13-expression" type="text" spellcheck="false" autocomplete="off" value="10+5*t*sin(pi*t/6)+exp(0.2*t)" required><p class="field-help">sin, cos, tan, exp, sqrt, ln, log, abs; constantes pi y e; potencias ^.</p>
+          <div class="field-row"><div><label for="s13-lower">Límite inferior a</label><input id="s13-lower" type="text" inputmode="decimal" value="0" required></div><div><label for="s13-upper">Límite superior b</label><input id="s13-upper" type="text" inputmode="decimal" value="6" required></div></div>
+          <div class="field-row"><div><label for="s13-intervals">Subintervalos n, par</label><input id="s13-intervals" type="number" min="2" max="100000" step="2" value="6" required></div><div><label for="s13-decimals">Decimales visibles</label><input id="s13-decimals" type="number" min="0" max="12" step="1" value="9" required></div></div>
+          <div class="field-row"><div><label for="s13-exact">Valor exacto o de referencia <span class="optional">(opcional)</span></label><input id="s13-exact" type="text" inputmode="decimal" value=""></div><div><label for="s13-M">Cota M de |f⁽⁴⁾| <span class="optional">(opcional)</span></label><input id="s13-M" type="text" inputmode="decimal" value=""><p class="field-help">Debe justificar M ≥ máx |f⁽⁴⁾| para que la cota garantice el error.</p></div></div>
+          <label for="s13-n-values">Valores de n para convergencia <span class="optional">(opcional)</span></label><input id="s13-n-values" type="text" value="2, 4, 6, 12, 24"><p class="field-help">Enteros pares entre 2 y 100000, separados por comas; máximo 20.</p>
+          <div class="button-row"><button class="button button-primary" type="submit">Calcular integral</button><button class="button button-secondary" type="button" id="s13-restore">Restaurar ejercicio original</button><button class="button button-secondary" type="button" id="s13-modify">Modificar datos</button><button class="button button-quiet" type="button" id="s13-clear">Limpiar entradas</button></div>
+          <p id="s13-error" class="form-error" role="alert" hidden></p>
+        </form>
+        <aside class="guide-panel"><span class="small-label">Guía rápida</span><h3>Escribe, calcula, interpreta.</h3><p>El analizador matemático compartido no ejecuta código JavaScript. La regla requiere n par.</p><div class="example-list"><code>x^2 + 3*x + 1</code><code>x^4</code><code>sin(x)</code><code>e^x</code><code>ln(x)</code><code>1/(1+x^2)</code><code>sqrt(1+x^2)</code></div><p>Si no conoces el valor exacto o una cota M demostrada, deja sus campos vacíos. El gráfico ilustra parábolas, y los cálculos conservan la precisión numérica interna.</p></aside>
+      </div>
+      <div id="s13-solver-output" class="output-grid" aria-live="polite"></div>
+    </section>
   </main>
-  <footer><span>Sistema de Métodos Numéricos · Unidad III</span><span>Sesión 12 · Regla del trapecio compuesto</span></footer>
+  <footer><span>Sistema de Métodos Numéricos · Unidad III</span><span>Sesiones 12 y 13 · Integración numérica</span></footer>
 </body>
 </html>
