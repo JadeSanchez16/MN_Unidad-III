@@ -2,7 +2,7 @@
 const FUNCTIONS = Object.freeze({ sin: Math.sin, cos: Math.cos, tan: Math.tan, exp: Math.exp, sqrt: Math.sqrt, ln: Math.log, log: Math.log10, abs: Math.abs });
 const PRECEDENCE = { '+': 1, '-': 1, '*': 2, '/': 2, '^': 4 };
 
-export function compileExpression(source) {
+export function compileExpression(source, { allowY = false } = {}) {
   if (typeof source !== 'string' || !source.trim()) throw new Error('Escribe una función matemática.');
   if (source.length > 300) throw new Error('La expresión supera 300 caracteres.');
   const input = source.replaceAll('π', 'pi').replaceAll('×', '*').replaceAll('÷', '/');
@@ -42,14 +42,14 @@ export function compileExpression(source) {
       if (!Number.isFinite(token.value)) throw new Error('Número no finito.');
       left = { kind: 'number', value: token.value };
     } else if (token.type === 'name') {
-      if (token.value === 'x' || token.value === 't') left = { kind: 'variable' };
+      if (token.value === 'x' || token.value === 't' || (allowY && token.value === 'y')) left = { kind: 'variable', name: token.value };
       else if (token.value === 'pi' || token.value === 'e') left = { kind: 'number', value: token.value === 'pi' ? Math.PI : Math.E };
       else if (Object.hasOwn(FUNCTIONS, token.value)) {
         expect('(');
         const argument = parse(0, depth + 1);
         expect(')');
         left = { kind: 'call', name: token.value, argument };
-      } else throw new Error(`Nombre desconocido: ${token.value}. Usa x o t como variable.`);
+      } else throw new Error(`Nombre desconocido: ${token.value}. Usa ${allowY ? 'x o t e y' : 'x o t'} como variable.`);
     } else if (token.type === '(') {
       left = parse(0, depth + 1);
       expect(')');
@@ -66,14 +66,14 @@ export function compileExpression(source) {
   }
   const tree = parse();
   if (at !== tokens.length) throw new Error(`Elemento inesperado: ${peek().value}.`);
-  function evaluate(node, value) {
+  function evaluate(node, value, yValue) {
     switch (node.kind) {
       case 'number': return node.value;
-      case 'variable': return value;
-      case 'unary': return node.op === '-' ? -evaluate(node.argument, value) : evaluate(node.argument, value);
-      case 'call': return FUNCTIONS[node.name](evaluate(node.argument, value));
+      case 'variable': return node.name === 'y' ? yValue : value;
+      case 'unary': return node.op === '-' ? -evaluate(node.argument, value, yValue) : evaluate(node.argument, value, yValue);
+      case 'call': return FUNCTIONS[node.name](evaluate(node.argument, value, yValue));
       case 'binary': {
-        const a = evaluate(node.left, value), b = evaluate(node.right, value);
+        const a = evaluate(node.left, value, yValue), b = evaluate(node.right, value, yValue);
         if (node.op === '+') return a + b;
         if (node.op === '-') return a - b;
         if (node.op === '*') return a * b;
@@ -83,10 +83,13 @@ export function compileExpression(source) {
       default: throw new Error('Expresión inválida.');
     }
   }
-  return value => {
+  return (value, yValue) => {
     if (!Number.isFinite(value)) throw new Error('El punto de evaluación debe ser finito.');
-    const result = evaluate(tree, value);
+    if (allowY && !Number.isFinite(yValue)) throw new Error('El valor de y debe ser finito.');
+    const result = evaluate(tree, value, yValue);
     if (!Number.isFinite(result)) throw new Error(`La función no está definida o no es finita en ${value}.`);
     return result;
   };
 }
+
+export const compileOdeExpression = source => compileExpression(source, { allowY: true });

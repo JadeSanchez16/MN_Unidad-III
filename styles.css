@@ -13,7 +13,7 @@ html {
 body {
   margin:0
 }
-button,input {
+button,input,select {
   font:inherit
 }
 button {
@@ -214,6 +214,16 @@ main {
   color:#f1fffc;
   overflow-x:auto;
   margin:24px 0
+}
+.ode-hero-equation {
+  font:italic 1.7rem Georgia,serif;
+  color:#f1fffc;
+  margin:20px 0
+}
+.ode-hero-method {
+  color:#d5e8eb;
+  line-height:1.5;
+  margin:12px 0
 }
 .formula-foot {
   font-size:.82rem;
@@ -541,7 +551,7 @@ main {
   font-size:.82rem;
   margin:18px 0 7px
 }
-.form-panel input {
+.form-panel input,.form-panel select {
   width:100%;
   padding:12px 13px;
   border:1px solid #bdcdd3;
@@ -549,8 +559,12 @@ main {
   background:#fbfdfd;
   color:#1b3545
 }
-.form-panel input:focus {
+.form-panel input:focus,.form-panel select:focus {
   border-color:#12857e
+}
+.form-panel input:disabled {
+  opacity:.55;
+  background:#edf1f2
 }
 .field-row {
   display:grid;
@@ -614,6 +628,9 @@ main {
 }
 .muted {
   color:#71838d
+}
+.print-only {
+  display:none
 }
 footer {
   display:flex;
@@ -697,5 +714,53 @@ footer {
   }
   footer {
     flex-direction:column
+  }
+}
+@media print {
+  .site-header,#sesion12,#ejercicio,#solucionador,#sesion13,#s13-ejercicio,#s13-solucionador,.section-tabs,.hero-links,#s14-solucionador .solver-layout,footer {
+    display:none!important
+  }
+  body,main {
+    background:white;
+    color:black;
+    max-width:none;
+    padding:0
+  }
+  .hero {
+    min-height:auto;
+    padding:15px;
+    margin:0 0 12px;
+    color:black;
+    background:white
+  }
+  .hero-formula {
+    display:none
+  }
+  .output-grid {
+    display:block
+  }
+  .output-grid>section,.problem-card {
+    box-shadow:none;
+    break-inside:avoid;
+    margin:12px 0
+  }
+  #s14-solver-output {
+    display:none
+  }
+  .print-only {
+    display:block;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    font:11pt/1.45 Georgia,serif
+  }
+  .chart-card {
+    max-width:650px
+  }
+  .step-list {
+    display:block
+  }
+  .step-list li {
+    break-inside:avoid;
+    margin:8px 0
   }
 }
